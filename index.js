@@ -1,9 +1,14 @@
 const webdriver = require('selenium-webdriver');
+const { Options } = require('selenium-webdriver/firefox');
+const { Platform } = require('selenium-webdriver/lib/capabilities');
 const By = webdriver.By;
 const until = webdriver.until;
 
+const o = new Options();
+o.setPlatform(Platform.LINUX)
 const driver = new webdriver.Builder()
-    .forBrowser(webdriver.Browser.CHROME)
+    .forBrowser(webdriver.Browser.FIREFOX)
+    .setFirefoxOptions(o)
     .build();
 
 async function test() {
