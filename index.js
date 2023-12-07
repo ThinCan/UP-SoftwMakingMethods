@@ -3,7 +3,7 @@ const By = webdriver.By;
 const until = webdriver.until;
 
 const driver = new webdriver.Builder()
-    .forBrowser('firefox')
+    .forBrowser(webdriver.Browser.CHROME)
     .build();
 
 async function test() {
@@ -31,3 +31,4 @@ async function test() {
 }
 
 test()
+
