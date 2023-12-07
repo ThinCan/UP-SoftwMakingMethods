@@ -20,6 +20,11 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install Chrome
       run: sudo apt-get install google-chrome-stable
+    - run: wget https://chromedriver.storage.googleapis.com/92.0.4515.107/chromedriver_linux64.zip
+    - run: unzip chromedriver_linux64.zip
+    - run: sudo mv chromedriver /usr/bin/chromedriver
+    - run: sudo chown root:root /usr/bin/chromedriver
+    - run: sudo chmod +x /usr/bin/chromedriver
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
