@@ -10,7 +10,7 @@ const driver = new webdriver.Builder()
 
 async function test() {
     try {
-        await driver.get('http://localhost:5500');
+        await driver.get('http://83.5.245.147:5500');
 
         const element1 = await driver.wait(until.elementLocated(By.css('.book-row span:nth-child(1)')), 10000);
         const text1 = await element1.getText();
