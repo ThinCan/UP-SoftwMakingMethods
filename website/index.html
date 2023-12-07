@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+</head>
+
+<body>
+    <div id="product-container"></div>
+    <hr>
+    <h1>Books</h1>
+
+    <div id="book-form">
+        <div>
+            <label>title: </label>
+            <input id="book-form-input-title" type="text">
+            <br>
+            <label>description: </label>
+            <input id="book-form-input-description" type="text">
+            <br>
+            <label>author: </label>
+            <input id="book-form-input-author" type="text">
+            <br>
+            <button id="book-form-button-addbook">Add new book</button>
+        </div>
+    </div>
+    <div id="book-container"></div>
+
+    <script src="./models/bookModel.js"></script>
+    <script src="./views/bookView.js"></script>
+    <script src="./controllers/bookController.js"></script>
+    <script>
+        const bookView = new BookView();
+        let books = [];
+        let bookController;
+        fetch("./config.json").then(e => e.json()).then(config => {
+            bookController = new BookController(bookView, config);
+            getBooks();
+        }).catch(e => console.error(e));
+
+        async function getBooks() {
+            let _books = await bookController.fetchBookData();
+            books = []
+            for (const b of _books) {
+                books.push({ book: b, is_updating: false });
+            }
+            showBooks();
+        }
+
+        function showBooks() {
+            document.getElementById("book-container").innerHTML = ""
+            for (const b of books) {
+                bookView.render(b.book, b.is_updating);
+            }
+        }
+
+        function getBookById() {
+            const bookId = document.getElementById('bookId').value;
+            bookController.fetchBookById(bookId);
+        }
+
+        function deleteBookById() {
+            const deleteBookId = document.getElementById('deleteBookId').value;
+            bookController.deleteBookById(deleteBookId);
+        }
+        function bookUpdate(id) {
+            books.find(e => e.book.id == id).is_updating = true;
+            showBooks();
+        }
+        function bookDelete(id) {
+            bookController.deleteBookById(id).then(() => {
+                getBooks();
+            });
+        }
+        function bookUpdateCancel(id) {
+            books.find(e => e.book.id == id).is_updating = false;
+            showBooks();
+        }
+        function bookUpdateConfirm(id) {
+            const nbtitle = document.getElementById(`book-update-title-${id}`).value;
+            const nbdesc = document.getElementById(`book-update-desc-${id}`).value;
+            const nbauth = document.getElementById(`book-update-author-${id}`).value;
+            bookController.updateBookData(id, { title: nbtitle, description: nbdesc, author: nbauth }).then(() => {
+                getBooks();
+            })
+        }
+        document.getElementById("book-form-button-addbook").onclick = () => {
+            const nbtitle = document.getElementById('book-form-input-title').value;
+            const nbdesc = document.getElementById('book-form-input-description').value;
+            const nbauth = document.getElementById('book-form-input-author').value;
+            bookController.createBook({ title: nbtitle, description: nbdesc, author: nbauth }).then(() => {
+                getBooks();
+            })
+        }
+    </script>
+</body>
+
+</html>
