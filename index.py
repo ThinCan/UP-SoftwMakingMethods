@@ -31,6 +31,7 @@ driver.find_element(By.ID, "book-form-button-addbook").click()
 wait = WebDriverWait(driver, 10)
 child = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#book-container > div")))
 spans = child.find_elements(By.TAG_NAME, "span")
+driver.implicitly_wait(1.5)
 
 assert len(spans) == 3
 assert spans[0].text == title
@@ -39,6 +40,8 @@ assert spans[2].text == author
 
 button = driver.find_element(By.CSS_SELECTOR, ".book-row button")
 button.click()
+
+driver.implicitly_wait(1.5)
 wait = WebDriverWait(driver, 10)
 update_inputs = driver.find_elements(By.CSS_SELECTOR, ".book-row input")
 assert(len(update_inputs) == 3)
@@ -49,7 +52,7 @@ update_inputs[2].send_keys("3")
 button = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".book-row button:last-child")))
 button.click()
 wait = WebDriverWait(driver, 10)
-driver.implicitly_wait(0.5)
+driver.implicitly_wait(1.5)
 spans = driver.find_elements(By.CSS_SELECTOR, ".book-row span")
 assert len(spans) == 3
 assert spans[0].text == "1"
