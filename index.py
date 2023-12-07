@@ -51,7 +51,6 @@ update_inputs[2].send_keys("3")
 
 button = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".book-row button:last-child")))
 button.click()
-wait = WebDriverWait(driver, 10)
 driver.implicitly_wait(1.5)
 spans = driver.find_elements(By.CSS_SELECTOR, ".book-row span")
 assert len(spans) == 3
@@ -61,6 +60,4 @@ assert spans[2].text == "3"
 # Find the last button inside #book-row and click it
 button = driver.find_element(By.CSS_SELECTOR, ".book-row button:last-child")
 button.click()
-
-wait = WebDriverWait(driver, 10)
 print("The test passed successfully!")
