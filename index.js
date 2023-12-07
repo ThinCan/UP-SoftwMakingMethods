@@ -30,4 +30,4 @@ async function test() {
     }
 }
 
-test().catch((error) => console.log(error));
+test()
