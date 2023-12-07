@@ -4,7 +4,6 @@ const { Platform } = require('selenium-webdriver/lib/capabilities');
 const By = webdriver.By;
 const until = webdriver.until;
 
-o.setPlatform(Platform.WINDOWS)
 const driver = new webdriver.Builder()
     .forBrowser(webdriver.Browser.EDGE)
     .build();
