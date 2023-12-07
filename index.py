@@ -14,8 +14,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 
 
 driver.get("http://83.5.245.147:5500/")
-driver.implicitly_wait(0.1)
-book_row = driver.find_element(By.CLASS_NAME, "book-row")
+driver.implicitly_wait(1.0)
 span1 = driver.find_element(By.CSS_SELECTOR, ".book-row > span:nth-child(1)")
 span2 = driver.find_element(By.CSS_SELECTOR, ".book-row > span:nth-child(2)")
 span3 = driver.find_element(By.CSS_SELECTOR, ".book-row > span:nth-child(3)")
